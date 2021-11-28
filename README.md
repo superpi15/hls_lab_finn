@@ -44,6 +44,17 @@ torch.cuda.is_available()
   * Install Xilinx 2020.1 
   * Setup [FINN](https://finn.readthedocs.io/en/latest/getting_started.html)
 
+  * Source [init.sh](init.sh) in your terminal. Its content is shown as follows. Please modify it according to your Xilinx installation and device ip. 
+```shell
+source /tools/Xilinx/Vitis/2020.1/settings64.sh 
+export FINN_XILINX_PATH=/tools/Xilinx/
+export FINN_XILINX_VERSION=2020.1
+export VIVADO_PATH=/tools/Xilinx/Vivado/2020.1
+export PYNQ_BOARD=Pynq-Z2
+export FINN_HOST_BUILD_DIR=/home/${USER}/build
+export PYNQ_IP=<YOUR_FPGA_IP>
+```
+
 ## Part-1 
 
 The end-to-end flow is based on FINN tutorial. The original jupyter-notebook of the flow is located at the path: "finn/notebooks/end2end_example/bnn-pynq/cnv_end2end_example.ipynb". <br/>
