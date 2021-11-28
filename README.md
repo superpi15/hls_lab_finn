@@ -1,7 +1,7 @@
 # hls_lab_finn
 Experiments for FINN flow. <br/>
 
-This experiment achieve end-to-end NN deployment on a normal laptop, i.e., from NN training, Bitstream generation, to FPGA deployment, all can be done on a laptop. <br/>
+This experiment achieves end-to-end NN deployment on a normal laptop, i.e., from NN training, Bitstream generation, to FPGA deployment, all can be done on a laptop. <br/>
 
 * System requirement 
   * CUDA compatible computer: Nvidia graphic cards 
