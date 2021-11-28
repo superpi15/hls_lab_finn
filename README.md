@@ -43,3 +43,21 @@ torch.cuda.is_available()
     * https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user 
   * Install Xilinx 2020.1 
 
+
+## Part-1 
+
+The end-to-end flow is based on FINN tutorial. The original jupyter-notebook of the flow is located at the path: "finn/notebooks/end2end_example/bnn-pynq/cnv_end2end_example.ipynb". <br/>
+We provide a improved version of it. Please put the file "finn/notebooks/end2end_example/bnn-pynq/cnv_end2end_example_new.ipynb" to the corresponding FINN path. 
+The improvement resolve the driver issue based on the suggestion of [Pynq-driver-issue](https://github.com/Xilinx/finn/discussions/442#discussioncomment-1675720). <br/><br/>
+Specifically, we add the following code to the deployment part of the notebook. 
+
+```python
+from finn.core.modelwrapper import ModelWrapper
+from finn.transformation.fpgadataflow.make_pynq_driver import MakePYNQDriver
+
+model = ModelWrapper(build_dir + "/end2end_cnv_w1a1_synth.onnx")
+model = model.transform(MakePYNQDriver(platform="zynq-iodma"))
+model.save(build_dir + "/end2end_cnv_w1a1_synth-driver.onnx")
+
+```
+
