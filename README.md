@@ -42,7 +42,7 @@ torch.cuda.is_available()
     * allow non-root to run docker. Detailed setting can be found in docker's official webpage. 
     * https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user 
   * Install Xilinx 2020.1 
-
+  * Setup [FINN](https://finn.readthedocs.io/en/latest/getting_started.html)
 
 ## Part-1 
 
