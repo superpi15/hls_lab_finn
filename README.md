@@ -105,7 +105,7 @@ The testing accuracy on software is shown below:
 ![accSW](part2/accSW.png)
 
 The testing accuracy on hardware is shown below:
-![accHW](part2/accHW.png)
+![accHW](part2/accHW_.png)
 
 We can observe that there is a gap between the two accuracy values (50% v.s. 35.66%). <br/>
 So far, we are still trying to figure out what causes it. <br/>
