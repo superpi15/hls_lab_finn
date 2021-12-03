@@ -72,3 +72,40 @@ model.save(build_dir + "/end2end_cnv_w1a1_synth-driver.onnx")
 
 ```
 
+## Part-2
+
+We do part 2 based on the offered brevitas training code and the jupyter-notebook located at "finn/notebooks/end2end_example/bnn-pynq/cnv_end2end_example.ipynb". <br/>
+Some modifications are needed, including those in "LabD_FINN.pdf" and those posted in the discussion on ntu cool.  <br/>
+Moreover, we have to modify the padding of the convolution layers when we implement the model architecture assigned by part 2, which is shown in the following figure: <br/>
+![vgg9Archi](figures/vgg9_modelArchitecture.png)
+In the original traing code, the convolution layers have padding being 0, which will lead the input size of the third pooling layer being 1x1 and thus the pooling cannot be performed. <br/>
+To solve this, I modified the padding of all the convolution layers to 1. <br/>
+When doing so, the input size of the first fully connected layer will be 256x4x4, and we have to set the number of input features of the first FC layer accordingly. <br/>
+
+When deploying on FPGA, the number of PE and SIMD have to be decreased compared with the original values in cnv_end2end_example.ipynb. <br/>
+It may due to the fact that adjusting the padding make the model much bigger than the original model. <br/>
+We set them as follows:
+```python
+# each tuple is (PE, SIMD, in_fifo_depth) for a layer
+folding = [
+    (8, 3, 128),
+    (8, 16, 128),
+    (4, 16, 128),
+    (4, 16, 128),
+    (2, 16, 81),
+    (2, 16, 81),
+    (1, 16, 2),
+    (1, 4, 2),
+    (1, 8, 128),
+    (2, 1, 3),
+]
+```
+
+The testing accuracy on software is shown below:
+![accSW](part2/accSW.png)
+
+The testing accuracy on hardware is shown below:
+![accHW](part2/accHW.png)
+
+We can observe that there is a gap between the two accuracy values (50% v.s. 35.66%). <br/>
+So far, we are still trying to figure out what causes it. <br/>
