@@ -78,11 +78,11 @@ We do part 2 based on the offered brevitas training code and the jupyter-noteboo
 Some modifications are needed, including those in "LabD_FINN.pdf" and those posted in the discussion on ntu cool.  <br/>
 Moreover, we have to modify the padding of the convolution layers when we implement the model architecture assigned by part 2, which is shown in the following figure: <br/>
 ![vgg9Archi](figures/vgg9_modelArchitecture.png)
-In the original traing code, the convolution layers have padding being 0, which will lead the input size of the third pooling layer being 1x1 and thus the pooling cannot be performed. <br/>
-To solve this, I modified the padding of all the convolution layers to 1. <br/>
+In the original traing code, the convolution layers have padding being 0, which will lead the input size of the third pooling layer to be 1x1 and thus the pooling cannot be performed. <br/>
+To solve this, we modified the padding of all the convolution layers to 1. <br/>
 When doing so, the input size of the first fully connected layer will be 256x4x4, and we have to set the number of input features of the first FC layer accordingly. <br/>
 
-When deploying on FPGA, the number of PE and SIMD have to be decreased compared with the original values in cnv_end2end_example.ipynb. <br/>
+When deploying on FPGA, the number of PE and SIMD have to be decreased compared with the original values in cnv_end2end_example.ipynb so that the hardware resources needed can fit in the PYZQ-Z2 FPGA board. <br/>
 It may due to the fact that adjusting the padding make the model much bigger than the original model. <br/>
 We set them as follows:
 ```python
