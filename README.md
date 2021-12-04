@@ -115,7 +115,7 @@ The testing accuracy on hardware is shown below:
 
 We can observe that there is a gap between the two accuracy values (50% v.s. 35.66%). <br/>
 So far, we are still trying to figure out what causes it. <br/>
-Few items we've investigated: 
+A few items we've investigated: 
 * Try different PE and SIMD combinations for different layers does not help. 
 * Deploy to other FPGA (Ultra96v2) does not help. Thus it is less likely to be compatibility issue between FINN and FPGAs. 
 * Train CNV_1W1A for Cifar100. There is no accuracy loss. Thus the problem could be now narrow down to VGG9. 
