@@ -69,8 +69,14 @@ from finn.transformation.fpgadataflow.make_pynq_driver import MakePYNQDriver
 model = ModelWrapper(build_dir + "/end2end_cnv_w1a1_synth.onnx")
 model = model.transform(MakePYNQDriver(platform="zynq-iodma"))
 model.save(build_dir + "/end2end_cnv_w1a1_synth-driver.onnx")
-
 ```
+
+The execution result :
+
+![](part1/image/Screenshot%202021-11-27%20215332.png)
+
+The images of each intermediate ONNX can be found here: https://github.com/superpi15/hls_lab_finn/tree/main/part1/image 
+
 
 ## Part-2
 
