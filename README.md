@@ -135,6 +135,7 @@ In this part we seek to improve the throughput and runtime of a given fully-conn
 <img src="part3/part3.png" alt="part3" width="100%"/>
 
 We are asked to achieve at least 90% accuracy on the deployed network, and the result is 96.77% when running `validate.py` on pynq. We attach the screenshot of accuracy as below.
+
 <img src="part3/part3_accuracy_on_pynq.png" alt="part3acc" width="50%"/>
 
 The original PE and SIMD parameters is given in below in the FINN example notebook.
@@ -153,6 +154,7 @@ The result is attached below. We can see that runtime and throughput were severe
 We think that the reason is because by making these changes, we make the second layer be the bottleneck of this design. 
 In the original setting, the bottleneck is the first layer, which has `II = 784/49 * 512/16 = 512`, where as we have `II = 512/1 * 64/1 = 32768` now.
 When we divide the new II by the old II and multiply it with the original runtime, it’s quite close to the new runtime. 
+
 <img src="part3/metrics_exp1.png" alt="part3exp1" width="80%"/>
 
 Then in exp2, we need to optimize the design by adjusting PE and SIMD in each layers. Below we give the three setting of PE and SIMD of each layers in a table.
