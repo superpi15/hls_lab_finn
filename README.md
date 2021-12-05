@@ -146,14 +146,14 @@ Layer 4: PE=10, SIMD=8
 
 Here is the screenshot of the metrics with the default PE and SIMD.
 
-<img src="part3/metrics_default.png" alt="part3default" width="50%"/>
+<img src="part3/metrics_default.png" alt="part3default" width="80%"/>
 
 We are asked to change the PE and SIMD of layer 2 to 1 of the network in exp1.
 The result is attached below. We can see that runtime and throughput were severely degraded by these changes.
 We think that the reason is because by making these changes, we make the second layer be the bottleneck of this design. 
 In the original setting, the bottleneck is the first layer, which has `II = 784/49 * 512/16 = 512`, where as we have `II = 512/1 * 64/1 = 32768` now.
 When we divide the new II by the old II and multiply it with the original runtime, it’s quite close to the new runtime. 
-<img src="part3/metrics_exp1.png" alt="part3exp1" width="50%"/>
+<img src="part3/metrics_exp1.png" alt="part3exp1" width="80%"/>
 
 Then in exp2, we need to optimize the design by adjusting PE and SIMD in each layers. Below we give the three setting of PE and SIMD of each layers in a table.
 
@@ -170,11 +170,11 @@ adjusting only one layer is not going to affect the runtime in setting 3. The re
 We attach the metrics of three setting as below.
 
 - Setting 1
-<img src="part3/metrics_opt_setting1.png" alt="partopt1" width="50%"/>
+<img src="part3/metrics_opt_setting1.png" alt="partopt1" width="80%"/>
 
 - Setting 2
-<img src="part3/metrics_opt_setting2.png" alt="partopt2" width="50%"/>
+<img src="part3/metrics_opt_setting2.png" alt="partopt2" width="80%"/>
 
 - Setting 3
-<img src="part3/metrics_opt_setting3.png" alt="part3opt3" width="50%"/>
+<img src="part3/metrics_opt_setting3.png" alt="part3opt3" width="80%"/>
 
