@@ -71,6 +71,8 @@ model = model.transform(MakePYNQDriver(platform="zynq-iodma"))
 model.save(build_dir + "/end2end_cnv_w1a1_synth-driver.onnx")
 ```
 
+This section go through the FINN flow. It takes as input the weight files '\*.pth', 'best.tar', or sample weights, and generate a deployable onnx package with a sequence of transformation. The transformation includes (1) adding labels for users to observe the network (2) adding device information for deployment (3) [streamlining](https://arxiv.org/pdf/1709.04060.pdf) maps floating operations into integer operations. 
+
 The execution result :
 
 ![](part1/image/Screenshot%202021-11-27%20215332.png)
