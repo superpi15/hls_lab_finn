@@ -1,5 +1,7 @@
-# hls_lab_finn
+# hls_lab_finn 
 Experiments for [FINN flow](https://github.com/Xilinx/finn). <br/>
+
+This document is exported from: [https://github.com/superpi15/hls_lab_finn](https://github.com/superpi15/hls_lab_finn)
 
 This experiment achieves end-to-end NN deployment on a normal laptop, i.e., from NN training, Bitstream generation, to FPGA deployment, all can be done on a laptop. <br/>
 
