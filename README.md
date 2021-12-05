@@ -7,6 +7,7 @@ This experiment achieves end-to-end NN deployment on a normal laptop, i.e., from
   * CUDA compatible computer: Nvidia graphic cards 
     * install CUDA and CUDNN follow official instruction 
     * to check if CUDA is set correctly:
+
 ```shell
 $ nvidia-smi          # use this command in shell to see following print-out related to detected GPU
 Sun Nov 28 14:28:21 2021
@@ -30,21 +31,25 @@ Sun Nov 28 14:28:21 2021
 |  No running processes found                                                 |
 +-----------------------------------------------------------------------------+
 ```
-  * Python
+
+* Python
     * Python can be installed via pip or conda. 
     * install python's torch library. To see if CUDA is accessible from it: 
+
 ```python
 # in Python shell 
 import torch
 torch.cuda.is_available()
 ```
-  * docker is used to setup environment 
+
+* docker is used to setup environment 
     * allow non-root to run docker. Detailed setting can be found in docker's official webpage. 
     * https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user 
   * Install Xilinx 2020.1 
   * Setup [FINN](https://finn.readthedocs.io/en/latest/getting_started.html)
 
   * Source [init.sh](init.sh) in your terminal. Its content is shown as follows. Please modify it according to your Xilinx installation and device ip. 
+
 ```shell
 source /tools/Xilinx/Vitis/2020.1/settings64.sh 
 export FINN_XILINX_PATH=/tools/Xilinx/
@@ -75,7 +80,7 @@ This section go through the FINN flow. It takes as input the weight files '\*.pt
 
 The execution result :
 
-![](part1/image/Screenshot%202021-11-27%20215332.png)
+<img src="part1/image/Screenshot%202021-11-27%20215332.png" alt="screen" width="100%"/>
 
 The images of each intermediate ONNX can be found here: https://github.com/superpi15/hls_lab_finn/tree/main/part1/image 
 
@@ -93,6 +98,7 @@ When doing so, the input size of the first fully connected layer will be 256x4x4
 When deploying on FPGA, the number of PE and SIMD have to be decreased compared with the original values in cnv_end2end_example.ipynb so that the hardware resources needed can fit in the PYZQ-Z2 FPGA board. <br/>
 It may due to the fact that adjusting the padding make the model much bigger than the original model. <br/>
 We set them as follows:
+
 ```python
 # each tuple is (PE, SIMD, in_fifo_depth) for a layer
 folding = [
@@ -110,10 +116,10 @@ folding = [
 ```
 
 The testing accuracy on software is shown below:
-![accSW](part2/accSW.png)
+<img src="part2/accSW.png" alt="accSW" width="100%"/>
 
 The testing accuracy on hardware is shown below:
-![accHW](part2/accHW_.png)
+<img src="part2/accHW_.png" alt="accHW" width="100%"/>
 
 We can observe that there is a gap between the two accuracy values (50% v.s. 35.66%). <br/>
 So far, we are still trying to figure out what causes it. <br/>
@@ -126,7 +132,7 @@ A few items we've investigated:
 
 In this part we seek to improve the throughput and runtime of a given fully-connected neural network when compiling it with FINN by adjusting the folding parameter, PE and SIMD. The dataset we use in this design is MNIST, which means the input tensor size is 784 and the output tensor size is 10. The network architecture is given in the lab description as below.
 
-<img src="part3/part3.png" alt="part3" width="50%"/>
+<img src="part3/part3.png" alt="part3" width="100%"/>
 
 The original PE and SIMD parameters is given in below in the FINN example notebook.
 Layer 1: PE=16, SIMD=49
