@@ -134,6 +134,9 @@ In this part we seek to improve the throughput and runtime of a given fully-conn
 
 <img src="part3/part3.png" alt="part3" width="100%"/>
 
+We are asked to achieve at least 90% accuracy on the deployed network, and the result is 96.77% when running `validate.py` on pynq. We attach the screenshot of accuracy as below.
+<img src="part3/part3_accuracy_on_pynq.png" alt="part3acc" width="50%"/>
+
 The original PE and SIMD parameters is given in below in the FINN example notebook.
 Layer 1: PE=16, SIMD=49
 Layer 2: PE=8,  SIMD=8
@@ -145,7 +148,33 @@ Here is the screenshot of the metrics with the default PE and SIMD.
 
 <img src="part3/metrics_default.png" alt="part3default" width="50%"/>
 
-We are asked to change the PE and SIMD of layer 2 to 1 of the network. The result is attached below. We can see that runtime and throughput were severely degraded by these changes. We think that the reason is because we make the second layer be the bottleneck of this design. In the original setting, the bottleneck is the first layer, which has II = 784/49 * 512/16 = 512, where as we have II = 512/1 * 64/1 = 32768. When we divide the new II by the old II and multiply it with the original runtime, it’s quite close to the new runtime. 
+We are asked to change the PE and SIMD of layer 2 to 1 of the network in exp1.
+The result is attached below. We can see that runtime and throughput were severely degraded by these changes.
+We think that the reason is because by making these changes, we make the second layer be the bottleneck of this design. 
+In the original setting, the bottleneck is the first layer, which has `II = 784/49 * 512/16 = 512`, where as we have `II = 512/1 * 64/1 = 32768` now.
+When we divide the new II by the old II and multiply it with the original runtime, it’s quite close to the new runtime. 
+<img src="part3/metrics_exp1.png" alt="part3exp1" width="50%"/>
 
-<img src="part3/metrics_Layer2_exp.png" alt="part3l2exp" width="50%"/>
+Then in exp2, we need to optimize the design by adjusting PE and SIMD in each layers. Below we give the three setting of PE and SIMD of each layers in a table.
+
+| Setting | Layer 1 | Layer 2 | Layer 3 | Layer 4 |
+| ----- | --- | --- | --- | --- |
+| 1  | PE = 32; SIMD = 49;  | PE = 8; SIMD = 16; | PE = 8; SIMD = 8; | PE = 10; SIMD = 8; |
+| 2  | PE = 32; SIMD = 98;  | PE = 16; SIMD = 16; | PE = 8; SIMD = 8; | PE = 10; SIMD = 8; |
+| 3  | PE = 16; SIMD = 49;  | PE = 8; SIMD = 8; | PE = 8; SIMD = 8; | PE = 10; SIMD = 8; |
+
+In this design, the bottleneck is the first two layer with II = 512. In order to improve the throughput of the design, we should adjust the PE and SIMD of both layer simultaneously.
+In Setting 1 and 2, we try to achieve a maximum II with 256 and 128. By seeing the metric of the synthesized network, it is quite clear that we manage is speed up the runtime of the
+design by roughly 2 and 4 times faster than the default runtime. Unfortunately, FINN cannot synthesis with larger PE and SIMD due to the resource limitation. So we turn to prove that 
+adjusting only one layer is not going to affect the runtime in setting 3. The result does meet our expectation, with runtime and throughput are roughly the same as the original setting.
+We attach the metrics of three setting as below.
+
+- Setting 1
+<img src="part3/metrics_opt_setting1.png" alt="partopt1" width="50%"/>
+
+- Setting 2
+<img src="part3/metrics_opt_setting2.png" alt="partopt2" width="50%"/>
+
+- Setting 3
+<img src="part3/metrics_opt_setting3.png" alt="part3opt3" width="50%"/>
 
