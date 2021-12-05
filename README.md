@@ -120,4 +120,22 @@ A few items we've investigated:
 * Deploy to other FPGA (Ultra96v2) does not help. Thus it is less likely to be compatibility issue between FINN and FPGAs. 
 * Train CNV_1W1A for Cifar100. There is no accuracy loss. Thus the problem could be now narrow down to VGG9. 
 
+## Part-3 
 
+In this part we seek to improve the throughput and runtime of a given fully-connected neural network when compiling it with FINN by adjusting the folding parameter, PE and SIMD. The dataset we use in this design is MNIST, which means the input tensor size is 784 and the output tensor size is 10. The network architecture is given in the lab description as below.
+
+
+The original PE and SIMD parameters is given in below in the FINN example notebook.
+Layer 1: PE=16, SIMD=49
+Layer 2: PE=8,  SIMD=8
+Layer 3: PE=8, SIMD=8
+Layer 4: PE=10, SIMD=8
+
+
+Here are the screenshot of the metrics with the default PE and SIMD.
+
+<img src="part3/metrics_default.png" alt="part3default" width="50%"/>
+
+We are asked to change the PE and SIMD of layer 2 to 1 of the network. The result is attached below. We can see that runtime and throughput were severely degraded by these changes. We think that the reason is because we make the second layer be the bottleneck of this design. In the original setting, the bottleneck is the first layer, which has II = 784/49 * 512/16 = 512, where as we have II = 512/1 * 64/1 = 32768. When we divide the new II by the old II and multiply it with the original runtime, it’s quite close to the new runtime. 
+
+<img src="part3/metrics_Layer2_exp.png" alt="part3l2exp" width="50%"/>
